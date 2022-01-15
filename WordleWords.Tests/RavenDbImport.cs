@@ -1,8 +1,6 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Raven.Client.Documents;
-using Synnotech.Core.Entities;
 using Synnotech.Xunit;
 using Xunit;
 
@@ -11,7 +9,7 @@ namespace WordleWords.Tests;
 public static class RavenDbImport
 {
     [SkippableFact]
-    public static void ImportWordsToRavenDb()
+    public static async Task ImportWordsToRavenDb()
     {
         Skip.IfNot(TestSettings.Configuration.GetValue<bool>("runImport"));
 
@@ -19,7 +17,7 @@ public static class RavenDbImport
         using var streamReader = new StreamReader(Path.Combine(currentDirectory, "five-letter-words.txt"));
         using var session = RavenDb.CreateSession();
         string? currentLine;
-        while ((currentLine = streamReader.ReadLine()) != null)
+        while ((currentLine = await streamReader.ReadLineAsync()) != null)
         {
             if (currentLine.Length != 5)
                 continue;
@@ -33,18 +31,9 @@ public static class RavenDbImport
                 Character4 = currentLine[3],
                 Character5 = currentLine[4]
             };
-            session.Store(fiveLetterWord);
+            await session.StoreAsync(fiveLetterWord);
         }
         
-        session.SaveChanges();
+        await session.SaveChangesAsync();
     }
-}
-
-public sealed class FiveLetterWord : StringEntity
-{
-    public char Character1 { get; init; }
-    public char Character2 { get; init; }
-    public char Character3 { get; init; }
-    public char Character4 { get; init; }
-    public char Character5 { get; init; }
 }

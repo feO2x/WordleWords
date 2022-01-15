@@ -11,8 +11,8 @@ public static class RavenDb
     
     private static IDocumentStore? DocumentStore { get; set; }
 
-    public static IDocumentSession CreateSession() =>
-        GetOrCreateDocumentStore().OpenSession();
+    public static IAsyncDocumentSession CreateSession() =>
+        GetOrCreateDocumentStore().OpenAsyncSession();
 
     private static IDocumentStore GetOrCreateDocumentStore()
     {
@@ -29,8 +29,7 @@ public static class RavenDb
             documentStore = DocumentStore = new DocumentStore
             {
                 Urls = new[] { TestSettings.Configuration["ravenDbUrl"] },
-                Database = TestSettings.Configuration["databaseName"],
-                Conventions = new DocumentConventions { IdentityPartsSeparator = '-' }
+                Database = TestSettings.Configuration["databaseName"]
             }.Initialize();
         }
 
