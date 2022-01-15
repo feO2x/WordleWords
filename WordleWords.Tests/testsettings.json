@@ -1,5 +1,6 @@
 ﻿{
     "runImport": false,
+    "runExtractWordsWithFiveLetters": false,
     "ravenDbUrl": "http://localhost:10001",
     "databaseName": "WordleWords"
 }
