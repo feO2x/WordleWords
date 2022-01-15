@@ -5,3 +5,4 @@ bin/
 obj/
 *.user
 testsettings.*.json
+words_alpha.txt
