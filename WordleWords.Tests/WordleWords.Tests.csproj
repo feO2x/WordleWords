@@ -26,6 +26,12 @@
         <None Update="testsettings.Development.json" Condition="Exists('testsettings.Development.json')">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="words_alpha.txt" Condition="Exists('words_alpha.txt')">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="five-letter-words.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>
